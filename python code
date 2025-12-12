@@ -1,0 +1,108 @@
+students = {}   # store students as {id: {name, age, class, marks}}
+
+def add_student():
+    student_id = input("Enter Student ID: ")
+    if student_id in students:
+        print("ID already exists!")
+        return
+
+    name = input("Enter Name: ")
+    age = input("Enter Age: ")
+    student_class = input("Enter Class: ")
+    marks = input("Enter Marks: ")
+
+    students[student_id] = {
+        "name": name,
+        "age": age,
+        "class": student_class,
+        "marks": marks
+    }
+    print("Student added successfully.\n")
+
+
+def update_student():
+    student_id = input("Enter Student ID to update: ")
+    if student_id not in students:
+        print("Student not found!\n")
+        return
+
+    print("Leave blank to skip an update.")
+    name = input("New Name: ")
+    age = input("New Age: ")
+    student_class = input("New Class: ")
+    marks = input("New Marks: ")
+
+    if name: students[student_id]["name"] = name
+    if age: students[student_id]["age"] = age
+    if student_class: students[student_id]["class"] = student_class
+    if marks: students[student_id]["marks"] = marks
+
+    print("Student updated successfully.\n")
+
+
+def delete_student():
+    student_id = input("Enter Student ID to delete: ")
+    if student_id in students:
+        del students[student_id]
+        print("Student deleted.\n")
+    else:
+        print("Student not found!\n")
+
+
+def view_all_students():
+    if not students:
+        print("No students available.\n")
+        return
+
+    for sid, info in students.items():
+        print(f"ID: {sid}, Name: {info['name']}, Age: {info['age']}, "
+              f"Class: {info['class']}, Marks: {info['marks']}")
+    print()
+
+
+def search_student():
+    keyword = input("Enter Name or ID to search: ").lower()
+
+    found = False
+    for sid, info in students.items():
+        if keyword == sid.lower() or keyword in info['name'].lower():
+            print(f"ID: {sid}, Name: {info['name']}, Age: {info['age']}, "
+                  f"Class: {info['class']}, Marks: {info['marks']}")
+            found = True
+
+    if not found:
+        print("No matching student found.\n")
+
+
+def main():
+    while True:
+        print("""
+===== Student Management System =====
+1. Add Student
+2. Update Student
+3. Delete Student
+4. View All Students
+5. Search Student
+6. Exit
+""")
+        choice = input("Enter your choice: ")
+
+        if choice == '1':
+            add_student()
+        elif choice == '2':
+            update_student()
+        elif choice == '3':
+            delete_student()
+        elif choice == '4':
+            view_all_students()
+        elif choice == '5':
+            search_student()
+        elif choice == '6':
+            print("Exiting...")
+            break
+        else:
+            print("Invalid choice, try again.\n")
+
+
+if __name__ == "__main__":
+    main()
